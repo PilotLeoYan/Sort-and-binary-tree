@@ -30,13 +30,3 @@ def display(root, **kwargs):
     else:
         draw(root, canvas, 400, 50, 200, 100, False)
     win.mainloop()
-    
-
-if __name__ == '__main__':
-    import binarytree
-    a = (7, 5, 6, 2, -4, 9, 2)    
-    root = binarytree.Node(a[0])
-
-    for i in a[1:]: root.insert(i)
-
-    display(root)

@@ -1,96 +1,161 @@
-from binary_tree import Node, BinaryTree
-from displaytrees import display
+if __name__ != '__main__':
+    from .binary_tree import Node, BinaryTree
+    from .displaytrees import display
 
-class NodeAvl(Node):
+import copy
+
+class Node:
     def __init__(self, value, index) -> None:
-        self.b = None
-        super().__init__(value, index)
+        self.v = value
+        self.i = index
+        self.l, self.r = None, None
+        self.b = 0 # balace
 
-    def __balance__(self, level=0):
+    def insert(self, value, index):
+        if value <= self.v:
+            if self.l is None:
+                self.l = Node(value, index)
+            else:
+                self.l.insert(value, index)
+        else:
+            if self.r is None:
+                self.r = Node(value, index)
+            else:
+                self.r.insert(value, index)
+
+    def balance(self, level=0):
         ll = level
-        if not self.l is None: ll = self.l.__balance__(level+1)
+        if not self.l is None: ll = self.l.balance(level+1)
         rl = level
-        if not self.r is None: rl = self.r.__balance__(level+1)
+        if not self.r is None: rl = self.r.balance(level+1)
         self.b = rl - ll
         return max(ll, rl)
     
-    def __checkbalance__(self) -> int:
-        if self.b < -1 or self.b > 1:
-            index = self.i
-            if self.b < -1:
-                lb = self.l.__checkbalance__()
-                if lb is None: return self.i
-                return lb
-            else:
-                rb = self.r.__checkbalance__()
-                if rb is None: return self.i
-                return rb
-        if self.b == 1:
-            return self.r.__checkbalance__()
-        if self.b == -1:
-            return self.l.__checkbalance__()
-        return None
-        
-    def insert(self, value, index):
-        if value <= self.v:
-            if self.l is None: self.l = NodeAvl(value, index)
-            else: self.l.insert(value, index)
-        else:
-            if self.r is None: self.r = NodeAvl(value, index)
-            else: self.r.insert(value, index)
+    def copy(self, node):
+        self.v = node.v
+        self.i = node.i
+        self.r = node.r
+        self.l = node.l
 
-class AVL(BinaryTree):
-    def __init__(self, a=None):
-        self.root = NodeAvl('q', None)
+    def preorder(self, out=[]): # C, <-, ->
+        out.append(self.v)
+        if not self.l is None:
+            self.l.preorder(out)
+        if not self.r is None:
+            self.r.preorder(out)
+        return out
+    
+    def posorder(self, out=[]): #<-, ->, C
+        if not self.l is None:
+            self.l.posorder(out)
+        if not self.r is None:
+            self.r.posorder(out)
+        out.append(self.v)
+        return out
+    
+    def inorder(self, out=[]): #<-, C, ->
+        if not self.l is None:
+            self.l.inorder(out)
+        out.append(self.v)
+        if not self.r is None:
+            self.r.inorder(out)
+        return out
+        
+class AVL:
+    def __init__(self, a=None) -> None:
+        self.root = None
         self.index = 0
         if not a is None: self.insert(a)
-    
+
     def insert(self, a):
-        if type(a) is tuple or type(a) is list:
+        if a is list or a is tuple:
             for v in a:
-                if self.index == 0:
-                    self.root.l = NodeAvl(v, self.index)
+                if self.root is None:
+                    self.root = Node(a[0], self.index)
                 else:
-                    self.root.l.insert(v, self.index)
-                self.rebalance()
+                    self.root.insert(v, self.index)
+                    self.root.balance()
+                    self.balance_tree(self.root)
                 self.index += 1
-                self.display()
         else:
-            if self.index == 0:
-                self.root.l = NodeAvl(a, self.index)
+            if self.root is None:
+                self.root = Node(a, self.index)
+                self.display()
             else:
-                self.root.l.insert(a, self.index)
-            self.rebalance()
+                self.root.insert(a, self.index)
+                self.display()
+                self.balance_tree(self.root)
             self.index += 1
 
-    def rebalance(self):
-        self.root.l.__balance__()
-        index = self.root.l.__checkbalance__()
-        if not index is None:
-            print('index:', index)
-            self.display()
-            self.simpleRotate(index)
-            self.rebalance()
-        print('- '*5)
+    def rotate_left(self, node):
+        print('rotate left in index :', node.i)
+        node_copy = copy.copy(node)
+        new_root = node_copy.r
+        node_copy.r = new_root.l
+        new_root.l = node_copy
+        return new_root
+    
+    def rotate_right(self, node):
+        print('rotate right in index :', node.i)
+        node_copy = copy.copy(node)
+        new_root = node_copy.l
+        node_copy.l = new_root.r
+        new_root.r = node_copy
+        return new_root
+    
+    def rotate_rightLeft(self, node):
+        node.r = self.rotate_right(node.r)
+        self.display()
+        return self.rotate_left(node)
+    
+    def rotate_leftRight(self, node):
+        node.l = self.rotate_left(node.l)
+        self.display()
+        return self.rotate_right(node)
 
-    def simpleRotate(self, index : int):
-        if index < 0: 
-            print(f'Index "{index}" error at AVL.simpleRotate()')
-            return -1
-        node = self.root[index]
-        if node is None: 
-            print('Node do not exits')
-            return -2
-        temp_i, temp_v = node.i, node.v
-        self.pop(index)
-        self.root.l.insert(temp_v, temp_i)
-        self.root.l.__balance__()
+    def balance_tree(self, node):
+        if node.b > 1:
+            if node.r.b == 1:
+                node.copy(self.rotate_left(node))
+                self.root.balance()
+                self.display()
+            elif node.r.b == -1:
+                node.copy(self.rotate_rightLeft(node))
+                self.root.balance()
+                self.display()
+            else:
+                self.balance_tree(node.r)
+                #print('error 1 at index=', node.i)
+        elif node.b < -1:
+            if node.l.b == -1:
+                node.copy(self.rotate_right(node))
+                self.root.balance()
+                self.display()
+            elif node.l.b == 1:
+                node.copy(self.rotate_leftRight(node))
+                self.root.balance()
+                self.display()
+            else:
+                self.balance_tree(node.l)
+                #print('error 2 at index=', node.i)
+        if node.b == -1:
+            self.balance_tree(node.l)
+        if node.b == 1:
+            self.balance_tree(node.r)
 
-    def display(self): display(self.root.l, avl = True)
+    def preorder(self): return self.root.preorder()
+
+    def posorder(self): return self.root.posorder()
+
+    def inorder(self): return self.root.inorder()
+    
+    def display(self): display(self.root, avl=True)
 
 if __name__ == '__main__':
+    from displaytrees import display
     a = (10, 13, 15, 8, 5, 17, 16, 2, 3, 0)
-    avl = AVL(a)
+    avl = AVL(a[0])
+    avl.insert(a[:])
     print(avl.preorder())
     print(avl.posorder())
     print(avl.inorder())

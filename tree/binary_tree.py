@@ -1,5 +1,3 @@
-from displaytrees import display
-
 class Node:
     def __init__(self, value, index) -> None:
         self.v = value
@@ -82,13 +80,14 @@ class BinaryTree:
                 else:
                     self.root.l.insert(v, self.index)
                 self.index += 1
-                self.display()
+                #self.display()
         else:
             if self.index == 0:
                 self.root.l = Node(a, self.index)
             else:
                 self.root.l.insert(a, self.index)
             self.index += 1
+            self.display()
 
     def pop(self, index : int):
         if index < 0:
@@ -139,6 +138,7 @@ class BinaryTree:
     def display(self): display(self.root.l)
 
 if __name__ == '__main__':
+    from displaytrees import display
     a = (1, 67, 3, 6, 2, 5, 1, -1, 0, 70, 80)
     bt = BinaryTree()
     for value in a:
@@ -152,16 +152,5 @@ if __name__ == '__main__':
     bt.pop(8)
     bt.display()
 
-    '''
-    bt.pop(6)
-    bt.display()
-
-    bt.pop(9)
-    bt.display()
-
-    bt.pop(1)
-    bt.display()
-
-    bt.pop(0)
-    bt.display()
-    '''
+else:
+    from .displaytrees import display
