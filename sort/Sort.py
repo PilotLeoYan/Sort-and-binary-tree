@@ -1,11 +1,3 @@
-'''
-TODO
-- Buckect sort (no terminado)
--- elegir que método de ordenamiento para cada bucket
--- sumar los resultados del sub-sort al bucket sort
-- Probar mejor,medio,peor caso a cada sort
-'''
-
 def menu():
     while(True):
         print('\nLista de algoritmos de ordenamiento\n\n'
@@ -23,19 +15,19 @@ def menu():
         opc = input('\n-> ')
 
         if opc == 'e': return
-        elif opc == '1': __input__(Bubble.explain)
-        elif opc == '2': __input__(Bubble_mejorado.explain)
-        elif opc == '3': __input__(Selection.explain)
-        elif opc == '4': __input__(Cocktail.explain)
-        elif opc == '5': __input__(Counting.explain)
-        elif opc == '6': __input__(Insertion.explain)
-        elif opc == '7': __input__(Bucket.explain)
-        elif opc == '8': __input__(Merge.explain)
-        elif opc == '9': __input__(Shell.explain)
-        elif opc == '10': __input__(Comb.explain)
+        elif opc == '1': __input__(Bubble.explain, 0)
+        elif opc == '2': __input__(Bubble_mejorado.explain, 1)
+        elif opc == '3': __input__(Selection.explain, 2)
+        elif opc == '4': __input__(Cocktail.explain, 3)
+        elif opc == '5': __input__(Counting.explain, 4)
+        elif opc == '6': __input__(Insertion.explain, 5)
+        elif opc == '7': __input__(Bucket.explain, 6)
+        elif opc == '8': __input__(Merge.explain, 7)
+        elif opc == '9': __input__(Shell.explain, 8)
+        elif opc == '10': __input__(Comb.explain, 9)
         else: print('\n! Opción invalida')
 
-def __input__(function):
+def __input__(function, opc):
     '''
     function : .Algorithm
     '''
@@ -57,17 +49,26 @@ def __input__(function):
             return
         a.append(input_)
         
-    __summary__(function, n, a)
+    if opc == 7:
+        __summary__(function, n, a, 1)
+    else:
+        __summary__(function, n, a)
 
-def __summary__(function, n : int, a : list):
+def __summary__(function, n : int, a : list, exception=0):
     print('')
     print('- '*5)
     a_sorted, iters, query, compa, swaps = function(n, a[:])
     print('\nResultados:')
-    print(' Total de iteraciones:', iters)
-    print(' Total de consultas:', query)
-    print(' Total de comparaciones:', compa)
-    print(' Total de movimientos (swaps)', swaps)
+    if exception == 0:
+        print(' Total de iteraciones:', iters)
+        print(' Total de consultas:', query)
+        print(' Total de comparaciones:', compa)
+        print(' Total de movimientos (swaps):', swaps)
+    elif exception == 1: #merge
+        print(' Total de iteraciones:', iters)
+        print(' Total de consultas:', query)
+        print(' Total de comparaciones:', compa)
+        print(' Total de inserciones:', swaps)
     
     print('\n Ordenado?', sorted(a)==a_sorted)
 

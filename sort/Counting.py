@@ -72,6 +72,7 @@ def explain(n : int, arr : list):
     for i in range(k):
         iters += 1
         for j in range(count_arr[i]):
+            swaps += 1
             output.append(i + min_value)
 
     return output, iters, query, compa, swaps

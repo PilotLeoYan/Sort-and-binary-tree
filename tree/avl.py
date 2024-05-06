@@ -68,10 +68,10 @@ class AVL:
         if not a is None: self.insert(a)
 
     def insert(self, a):
-        if a is list or a is tuple:
+        if (type(a) is list) or (type(a) is tuple):
             for v in a:
                 if self.root is None:
-                    self.root = Node(a[0], self.index)
+                    self.root = Node(v, self.index)
                 else:
                     self.root.insert(v, self.index)
                     self.root.balance()
@@ -80,11 +80,11 @@ class AVL:
         else:
             if self.root is None:
                 self.root = Node(a, self.index)
-                self.display()
             else:
                 self.root.insert(a, self.index)
-                self.display()
-                self.balance_tree(self.root)
+            self.root.balance()
+            self.display()
+            self.balance_tree(self.root)
             self.index += 1
 
     def rotate_left(self, node):
@@ -153,9 +153,9 @@ class AVL:
 
 if __name__ == '__main__':
     from displaytrees import display
-    a = (10, 13, 15, 8, 5, 17, 16, 2, 3, 0)
-    avl = AVL(a[0])
-    avl.insert(a[:])
+    a = [10, 13, 15, 8, 5, 17, 16, 2, 3, 0]
+    avl = AVL()
+    avl.insert(a)
     print(avl.preorder())
     print(avl.posorder())
     print(avl.inorder())
