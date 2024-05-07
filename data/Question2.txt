@@ -1,0 +1,8 @@
+{0: 'marxismo',
+ 1: 'nose 2',
+ 2: 'empy',
+ 3: 'empy',
+ 4: 'empy',
+ 5: 'empy',
+ 6: 'empy',
+ 7: 'empy'}

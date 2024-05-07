@@ -1,15 +1,11 @@
-import os
-import data
+import data2
 from sort import Sort
 from tree import Tree
 
 class App:
     def __init__(self):
         print('Hecho por: Leonardo Fabyan\n')
-        try:
-            os.mkdir(os.path.join('.//', data.DIRNAME))
-        except FileExistsError:
-            pass
+        data2.init()
         self.__startUpMenu__()
 
     def __inputUser__(self):
@@ -48,7 +44,7 @@ class App:
         print('\n 2) ¿Cúal fue el nombre de su primer mascota?')
         answerQuestion2 = input(' >> ')
 
-        print('\n  Eso es todo')
+        print('\n  Eso es todo\n')
         return answerQuestion1, answerQuestion2
 
     def __input__(self):
@@ -89,18 +85,15 @@ class App:
             _input = self.__input__()
             if _input[0]: break
             
-        _id = data.validAccount(_input[1], _input[2])
+        _id = data2.validAccount(_input[1], _input[2])
         if _id == -1:
-            print('\n! Usuario NO encontrado\n')
-            return
-        if _id == -2:
-            print('\n! Contraseña incorrecta\n')
+            print('\n! datos erróneos\n')
             return
         self.id = _id
         self.__menu__()
 
     def __signUp__(self):
-        if len(data.getConta()) == 0:
+        if data2.getTotalUsers() >= 7:
             print('\n! Limite de Usuarios alcanzado\n')
             return
         
@@ -108,30 +101,18 @@ class App:
             print('\nNuevo Usuario\n')
             _input = self.__input__()
             if _input[0]: break
-        answerQuestions = self.__inputQuestions__()
-        data.newAccount(_input[1], _input[2], answerQuestions)
-        print('\n$ cuenta añadida\n')
+
+        answer_questions = self.__inputQuestions__()
+        data2.newAccount(_input[1], _input[2], answer_questions)
+        print('$ cuenta añadida\n')
 
     def __showMatrices__(self):
-        print('\nUsuarios:')
-        for i in data.getUsers(): print(i)
-
-        print('\nContraseñas:')
-        for i in data.getPassw(): print(i)
-
-        print('\nDiccionario de Usuarios:')
-        _dict_users = data.getDictUsers()
-        for i in _dict_users: print('[{}: {}]'.format(i, _dict_users[i]))
-
-        print('\nDiccionario de Contraseñas:')
-        _dict_passws = data.getDictPassws()
-        for i in _dict_passws: print('[{}: {}]'.format(i, _dict_passws[i]))
-
-        print('\nConta:\n{}\n'.format(data.getConta()))
+        data2.toString()
+        print()
 
     def __menu__(self):
         while True:
-            print('\nHola {}\n'.format(''.join(data.getOneUser(self.id))))
+            print('\nHola {}\n'.format(''.join(data2.getOneUser(self.id))))
             print('1) Cambiar contraseña\n'
                   '2) Eliminar esta cuenta\n'
                   'e) Salir\n')
@@ -140,27 +121,27 @@ class App:
             if opc == 'e': break
             elif opc == '1': self.__changePassw__()
             elif opc == '2':
-                data.deleteThisAccount(self.id)
+                data2.deleteThisAccount(self.id)
                 print('\n$ Eliminado\n')
                 break
             else: print('\n!Opcion invalida\n')
 
     def __changePassw__(self):
         print('\nNueva Contraseña\n')
-        npassw = self.__input_passw__()
+        npassw = self.__inputPassw__()
         if not npassw: return
-        data.setOnePassw(self.id, npassw[1])
-        print('\n$ Cambio realizado\n')
+
+        data2.setOnePassw(self.id, npassw[1])
+        print('\n$ Cambio realizado')
 
     def __recoveryPass__(self):
         print()
         user = self.__inputUser__()
-        if user[0]:
-            return
+        if user[0]: return
 
         questions = self.__inputQuestions__()
         
-        query = data.recoveryPass(user[1], questions)
+        query = data2.recoveryPass(user[1], questions)
         if query == -1:
             print('\n! Usuario no encontrado\n')
             return
@@ -168,8 +149,7 @@ class App:
             print('\n! No coincide las contraseñas de seguridad\n')
             return
 
-        print('\nSu contraseña es:')
-        print(''.join(query))
+        print('Su contraseña es:', ''.join(query))
         print()
 
 if __name__ == '__main__':
