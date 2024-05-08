@@ -49,7 +49,7 @@ def __input__(function, opc):
             return
         a.append(input_)
         
-    if opc == 7:
+    if opc == 7 or opc == 4:
         __summary__(function, n, a, 1)
     else:
         __summary__(function, n, a)
@@ -59,15 +59,12 @@ def __summary__(function, n : int, a : list, exception=0):
     print('- '*5)
     a_sorted, iters, query, compa, swaps = function(n, a[:])
     print('\nResultados:')
+    print(' Total de iteraciones:', iters)
+    print(' Total de consultas:', query)
+    print(' Total de comparaciones:', compa)
     if exception == 0:
-        print(' Total de iteraciones:', iters)
-        print(' Total de consultas:', query)
-        print(' Total de comparaciones:', compa)
         print(' Total de movimientos (swaps):', swaps)
-    elif exception == 1: #merge
-        print(' Total de iteraciones:', iters)
-        print(' Total de consultas:', query)
-        print(' Total de comparaciones:', compa)
+    else: #merge and counting
         print(' Total de inserciones:', swaps)
     
     print('\n Ordenado?', sorted(a)==a_sorted)
