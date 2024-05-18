@@ -1,5 +1,3 @@
-#complete
-
 def solve(n : int, arr : list):
     # find the min, max value in arr
     min_value, max_value = arr[0], arr[0]
@@ -23,16 +21,16 @@ def solve(n : int, arr : list):
     return output
 
 def explain(n : int, arr : list):
-    '''
-    complete documentation of how it works Counting sort
-    '''
+    """
+    Explicación completa del método Counting.
+    """
     
     print('\nCounting sort\n'
           'Complexity : O(n + k)\n\n'
           'Only integer values')
     
     print('\nInput arr list:')
-    for i in range(n): arr[i] = int(arr[i])
+    for i in range(n): arr[i] = int(abs(arr[i]))
     print(arr, '\n')
 
     # iteraciones
@@ -78,6 +76,7 @@ def explain(n : int, arr : list):
     return output, iters, query, compa, swaps
 
 if __name__ == '__main__':
+    """Prueba de furza bruta para verificar la implementación del método."""
     import random
     for i in range(10000):
         n = random.randint(5, 100)

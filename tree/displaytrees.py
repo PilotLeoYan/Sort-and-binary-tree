@@ -1,4 +1,6 @@
 def display(root, **kwargs):
+    """Usando tkinter para mostrar un venta con el árbol.
+    Si es AVL, mostrará debajo de cada nodo su balance."""
     def draw(node, canvas, x, y, x_offset, y_offset, avl):
         if node == None:
             return

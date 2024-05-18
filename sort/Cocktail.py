@@ -1,5 +1,3 @@
-#complete
-
 def solve(n : int, arr : list):
     for i in range(n//2):
         for j in range(i, n-1-i):
@@ -11,9 +9,9 @@ def solve(n : int, arr : list):
     return arr
 
 def explain(n : int, arr : list):
-    '''
-    complete documentation of how it works Cocktail sort
-    '''
+    """
+    Explicación completa del método Cocktail.
+    """
     
     print('\nCocktail sort\n'
           'Complexity : O(n^2)')
@@ -50,6 +48,7 @@ def explain(n : int, arr : list):
     return arr, iters, query, compa, swaps
 
 if __name__ == '__main__':
+    """Prueba de furza bruta para verificar la implementación del método."""
     import random
     for i in range(10000):
         n = random.randint(5, 100)

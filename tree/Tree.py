@@ -2,6 +2,7 @@ from . import binary_tree
 from . import avl
 
 def menu():
+    """Menu para seleccionar el tipo de árbol binario."""
     while(True):
         print('\nEstructuras de árboles\n\n'
               '1) Binary\n'
@@ -15,6 +16,8 @@ def menu():
         else: print('\n! Opción invalida')
 
 def __input__(opc : bool):
+    """Permite mostrar paso a paso la construcción del árbol o mostrar el
+    resultado final."""
     show_each_step = input('\nMostrar cada inserción? 1=Si/0=No\n-> ')
     if show_each_step == '1' or show_each_step == 'Si':
         show_each_step = True
@@ -38,6 +41,8 @@ def __input__(opc : bool):
     
 
 def __treeInit__(obj, show_each_step, n):
+    """Obtiene la lista de elementos para construir un árbol y muestra las distintas
+    maneras de recorrerlo."""
     a = [0, ] * n
     if show_each_step:
         bintree = obj()

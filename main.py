@@ -3,12 +3,34 @@ from sort import Sort
 from tree import Tree
 
 class App:
+    """Class App
+
+    Esta clase de interfaz para el usuario, además de ser la base para los
+    distintos modulos y package para este proyecto.
+
+    Módulos:
+    - data2.py
+
+    Package:
+    - sort
+    . tree
+    """
     def __init__(self):
+        """Incio del programa y configuración inicial"""
         print('Hecho por: Leonardo Fabyan\n')
         data2.init()
         self.__startUpMenu__()
 
     def __inputUser__(self):
+        """Permite al usuario ingresar un string para convertirlo a una
+        lista de 8 elementos que contenga cada caracter ingresado.
+        Usado para ingresar el nombre del Usuario.
+        
+        Returns:
+        -------
+        list
+            list of 8 characters 
+        """
         user = list(input(' usuario: '))
 
         if len(user) == 0:
@@ -26,6 +48,15 @@ class App:
         return False, nuser
 
     def __inputPassw__(self):
+        """Permite al usuario ingresar un string para convertirlo a una
+        lista de 8 elementos que contenga cada caracter ingresado.
+        Usado para ingresar la contraseña del Usuario.
+
+        Returns:
+        -------
+        list
+            8 character list 
+        """
         passw = list(input(' contraseña: '))
         
         if len(passw) != 8:
@@ -37,6 +68,15 @@ class App:
         return False, passw
 
     def __inputQuestions__(self):
+        """Regresa las respuestas para cada pregunta de seguridad usado para
+        data2.py. 
+        Usado para establecer y validar preguntas de seguridad.
+
+        Returns:
+        -------
+        tuple
+            contains two strings, one per question
+        """
         print('\n Preguntas de seguridad:')
         print(' 1) ¿Cómo se llama su primera escuela?')
         answerQuestion1 = input(' >> ')
@@ -48,6 +88,14 @@ class App:
         return answerQuestion1, answerQuestion2
 
     def __input__(self):
+        """Obtiene y valida que el nombre y contraseña de Usuario sea
+        de formato lista y de 8 caracteres.
+
+        Returns:
+        -------
+        tuple
+            contains format validated, user name, user password
+        """
         _input = self.__inputUser__()
         if _input[0]: return False,
 
@@ -59,6 +107,8 @@ class App:
         return True, user, passw
 
     def __startUpMenu__(self):
+        """Inicia un bucle con las distintas opciones del programa para
+        acceder a dichas opciones"""
         while True:
             print('Hola\n\n'
                   '1) Login\n'
@@ -80,6 +130,9 @@ class App:
             else: print('\n! Opcion invalida\n')
 
     def __login__(self):
+        """Obtiene y usa data2.py para validar que los datos sean correctos.
+        Usado para acceder al submenu __menu__()
+        """
         while True:
             print('\nLogin\n')
             _input = self.__input__()
@@ -93,6 +146,9 @@ class App:
         self.__menu__()
 
     def __signUp__(self):
+        """Obtiene los datos del usuario y usa data2.py para crear un nuevo 
+        usuario si es disponible. Unicamente se puede tener hasta 8 usuarios
+        guardados simultaneamente."""
         if data2.getTotalUsers() >= 7:
             print('\n! Limite de Usuarios alcanzado\n')
             return
@@ -107,10 +163,15 @@ class App:
         print('$ cuenta añadida\n')
 
     def __showMatrices__(self):
+        """Se usa para mostrar todos los datos almecenados en ./data cómo:
+        - Users.txt
+        - Question1.txt
+        - Question2.txt"""
         data2.toString()
         print()
 
     def __menu__(self):
+        """Un menu en bucle para mostrar todos las opciones para un usuario ya ingresado."""
         while True:
             print('\nHola {}\n'.format(''.join(data2.getOneUser(self.id))))
             print('1) Cambiar contraseña\n'
@@ -127,6 +188,7 @@ class App:
             else: print('\n!Opcion invalida\n')
 
     def __changePassw__(self):
+        """Función para cambiar la contraseña de un usuario ya ingresado."""
         print('\nNueva Contraseña\n')
         npassw = self.__inputPassw__()
         if not npassw: return
@@ -135,6 +197,8 @@ class App:
         print('\n$ Cambio realizado')
 
     def __recoveryPass__(self):
+        """Función para poder recuperar la contraseña de un usuario a partir
+        de su nombre de usuario y las respuestas de ambas preguntas de seguridad."""
         print()
         user = self.__inputUser__()
         if user[0]: return
@@ -153,4 +217,5 @@ class App:
         print()
 
 if __name__ == '__main__':
+    """Inicial el proyecto una sola vez por ejecución."""
     app = App()

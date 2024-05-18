@@ -1,4 +1,5 @@
 def menu():
+    """Menu de opciones para escoger el método de ordenamiento."""
     while(True):
         print('\nLista de algoritmos de ordenamiento\n\n'
               '1) Bubble\n'
@@ -28,10 +29,7 @@ def menu():
         else: print('\n! Opción invalida')
 
 def __input__(function, opc):
-    '''
-    function : .Algorithm
-    '''
-
+    """Valida y guarda la lista para ser ordenada."""
     n = input('n: ')
     try:
         n = int(n)
@@ -55,6 +53,9 @@ def __input__(function, opc):
         __summary__(function, n, a)
 
 def __summary__(function, n : int, a : list, exception=0):
+    """Muestra el total de iteraciones, consultas, comparaciones y intercambios que el
+    método de ordenamiento seleccionado.
+    Puede cambiar intercambios por insercciones si es el caso de los métodos Merge y Counting."""
     print('')
     print('- '*5)
     a_sorted, iters, query, compa, swaps = function(n, a[:])
@@ -70,6 +71,7 @@ def __summary__(function, n : int, a : list, exception=0):
     print('\n Ordenado?', sorted(a)==a_sorted)
 
 def __test__(n, a, function):
+    """Funcion hecha para entrenar los métodos de ordenamiento para el examen."""
     print(function.__module__)
 
     print('\nn =', n)
@@ -82,6 +84,9 @@ def __test__(n, a, function):
     print()
 
 if __name__ == '__main__':
+    """Entrenar cada método de ordenamiento para el examen.
+    Genera una lista de tamaño aleatorio con valores aleatorios y escoge el orden
+    de los métodos aleatoriamente."""
     import Bubble
     import Bubble_mejorado
     import Selection
@@ -123,6 +128,7 @@ if __name__ == '__main__':
     __test__(n, a[:], Bucket.explain)
 
 else:
+    """Uso habitual para el proyecto. Llamado desde login.py"""
     from . import Bubble
     from . import Bubble_mejorado
     from . import Selection

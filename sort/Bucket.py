@@ -24,9 +24,9 @@ def solve(n : int, arr : list):
     return output
 
 def explain(n : int, arr : list):
-    '''
-    complete documentation of how it works Bucket sort
-    '''
+    """
+    Explicación completa del método Bucket.
+    """
     
     k = input('k:')
     try:
@@ -82,7 +82,8 @@ def explain(n : int, arr : list):
     for i in range(n):
         iters += 1
         query += 2
-        buckets[abs(int(arr[i] * k / max_value))].append(arr[i])
+        if arr[i] <= 0: buckets[0].append(arr[i])
+        else: buckets[abs(int(arr[i] * k / max_value))].append(arr[i])
     print('\n buckets:')
     print(buckets)
 
@@ -103,6 +104,7 @@ def explain(n : int, arr : list):
     return output, iters, query, compa, swaps
 
 if __name__ == '__main__':
+    """Prueba de furza bruta para verificar la implementación del método."""
     import random
     for i in range(10000):
         n = random.randint(5, 100)

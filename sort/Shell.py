@@ -1,5 +1,3 @@
-#complete
-
 def solve(n : int, arr : list):
     gap = n // 2
     while gap > 0:
@@ -14,9 +12,9 @@ def solve(n : int, arr : list):
     return arr
 
 def explain(n : int, arr : list):
-    '''
-    complete documentation of how it works Shell sort
-    '''
+    """
+    Explicación completa del método Shell.
+    """
     
     print('\nShell sort')
     
@@ -53,6 +51,7 @@ def explain(n : int, arr : list):
     return arr, iters, query, compa, swaps
 
 if __name__ == '__main__':
+    """Prueba de furza bruta para verificar la implementación del método."""
     import random
     for i in range(10000):
         n = random.randint(5, 100)

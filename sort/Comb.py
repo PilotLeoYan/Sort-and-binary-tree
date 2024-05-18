@@ -1,5 +1,3 @@
-#complete
-
 def solve(n : int, arr : list):
     gap = int(n / 1.3)
     is_sorted = True
@@ -18,9 +16,9 @@ def solve(n : int, arr : list):
     return arr
 
 def explain(n : int, arr : list):
-    '''
-    complete documentation of how it works Comb sort
-    '''
+    """
+    Explicación completa del método Comb.
+    """
     
     print('\nComb sort')
     
@@ -58,7 +56,7 @@ def explain(n : int, arr : list):
     return arr, iters, query, compa, swaps
 
 if __name__ == '__main__':
-    '''
+    """Prueba de furza bruta para verificar la implementación del método."""
     import random
     for i in range(10000):
         n = random.randint(5, 100)
@@ -72,12 +70,5 @@ if __name__ == '__main__':
             print('original:', a)
             print('returned:', res)
             break
-    '''
-    a = [17, 5, 6, 2, -4]
-    n = len(a)
-    res = explain(n, a[:])
-    print('\nreturned:', res[0])
-    print(res[1:])
-    print(res[0] == sorted(a))
 
 #https://en.wikipedia.org/wiki/Comb_sort

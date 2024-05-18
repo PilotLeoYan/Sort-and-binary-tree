@@ -1,5 +1,3 @@
-#complete
-
 def solve(n : int, arr : list):
     for i in range(n - 1):
         menor = i
@@ -10,9 +8,9 @@ def solve(n : int, arr : list):
     return arr
 
 def explain(n : int, arr : list):
-    '''
-    complete documentation of how it works Selection sort
-    '''
+    """
+    Explicación completa del método Selection.
+    """
     
     print('\nSelection sort\n'
           'Complexity : O(n^2)\n'
@@ -44,6 +42,7 @@ def explain(n : int, arr : list):
     return arr, iters, query, compa, swaps
 
 if __name__ == '__main__':
+    """Prueba de furza bruta para verificar la implementación del método."""
     import random
     for i in range(10000):
         n = random.randint(5, 100)

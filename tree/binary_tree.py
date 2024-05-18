@@ -1,10 +1,21 @@
 class Node:
+    """Clase nodo"""
     def __init__(self, value, index) -> None:
+        """Crea un nuevo nodo
+        
+        Parameters
+        -------
+        value : float
+        index : int
+        """
         self.v = value
         self.i = index
         self.l, self.r = None, None
 
     def __getitem__(self, index):
+        """
+        Regresa el objeto nodo respecto a su indice.
+        """
         if index == self.i: return self
         li = None #left index
         if not self.l is None: li = self.l[index]
@@ -17,6 +28,9 @@ class Node:
         print(f'Index "{index}" error at Node.__getitem__()')
 
     def __getparent__(self, index):
+        """
+        Obtiene el nodo padre de un nodo.
+        """
         if not self.l is None:
             if self.l.i == index: return self
         if not self.r is None:
@@ -31,6 +45,9 @@ class Node:
         print(f'Index "{index}" error at Node.__getparent__()')
 
     def insert(self, value, index):
+        """
+        Inserta un nuevo nodo
+        """
         if value <= self.v:
             if self.l is None:
                 self.l = Node(value, index)
@@ -67,12 +84,14 @@ class Node:
         return out
 
 class BinaryTree:
+    """Clase para administrar árboles binarios de busqueda."""
     def __init__(self, a=None) -> None:
         self.root = Node('q', None)
         self.index = 0
         if not a is None: self.insert(a)
 
     def insert(self, a):
+        """Inserta nuevos nodos al arbol. Puede ser uno a uno o todos a la vez."""
         if type(a) is tuple or type(a) is list:
             for v in a:
                 if self.index == 0:
@@ -90,6 +109,7 @@ class BinaryTree:
             self.display()
 
     def pop(self, index : int):
+        """Elimina un nodo especifico del árbol."""
         if index < 0:
             print(f'Index "{index}" error at BinaryTree.pop()')
             return -1

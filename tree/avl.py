@@ -5,13 +5,28 @@ if __name__ != '__main__':
 import copy
 
 class Node:
+    """Clase para construir nodos y sus relaciones"""
     def __init__(self, value, index) -> None:
+        """Crea un nuevo nodo
+        
+        Parameters
+        -------
+        value : float
+        index : int
+        """
         self.v = value
         self.i = index
         self.l, self.r = None, None
         self.b = 0 # balace
 
     def insert(self, value, index):
+        """Inserta según la regla de los árboles binario un nuevo nodo.
+        
+        Parameters
+        -------
+        value : float
+        index : int
+        """
         if value <= self.v:
             if self.l is None:
                 self.l = Node(value, index)
@@ -24,6 +39,7 @@ class Node:
                 self.r.insert(value, index)
 
     def balance(self, level=0):
+        """Regresa el balance de un nodo según con sus hijos."""
         ll = level
         if not self.l is None: ll = self.l.balance(level+1)
         rl = level
@@ -32,6 +48,7 @@ class Node:
         return max(ll, rl)
     
     def copy(self, node):
+        """Copia algnunos datos de un nodo a este nodo"""
         self.v = node.v
         self.i = node.i
         self.r = node.r
@@ -62,12 +79,14 @@ class Node:
         return out
         
 class AVL:
+    """Clase para administrar un árbol AVL"""
     def __init__(self, a=None) -> None:
         self.root = None
         self.index = 0
         if not a is None: self.insert(a)
 
     def insert(self, a):
+        """Inserta nuevos nodos al arbol. Puede ser uno a uno o todos a la vez."""
         if (type(a) is list) or (type(a) is tuple):
             for v in a:
                 if self.root is None:
@@ -114,6 +133,7 @@ class AVL:
         return self.rotate_right(node)
 
     def balance_tree(self, node):
+        """Balancea el arbol donde es necesario hacerlo."""
         if node.b > 1:
             if node.r.b == 1:
                 node.copy(self.rotate_left(node))
